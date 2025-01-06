@@ -1,17 +1,67 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+ * Tailwind 4 CSS-first config.
+ *
+ * MIGRATION NOTES (TW3 → TW4):
+ *
+ * TW3 way (now deleted — tailwind.config.js):
+ *   module.exports = {
+ *     theme: { extend: { colors: { brand: { 500: '#6366f1' } } } }
+ *   }
+ *
+ * TW4 way (right here, in CSS):
+ *   @import "tailwindcss";
+ *   @theme { --color-brand-500: #6366f1; }
+ *
+ * Key changes:
+ *   @tailwind base/components/utilities  →  @import "tailwindcss"
+ *   tailwind.config.js theme.extend      →  @theme { ... }
+ *   Content paths (purge)                →  auto-detected from @source
+ *   darkMode: 'class'                    →  @variant dark (&:where(.dark *))
+ *   @apply still works — no changes needed in Blade/Livewire templates
+ *
+ * Performance: TW4 is ~10x faster (Rust-based engine via Lightning CSS).
+ */
 
+@import "tailwindcss";
+
+/* ── Source scanning (replaces content: [] in config) ───────── */
+@source "../views/**/*.blade.php";
+@source "../../app/Http/Livewire/**/*.php";
+@source "../../app/Livewire/**/*.php";
+@source "../js/**/*.js";
+
+/* ── Theme tokens (replaces theme.extend in config) ─────────── */
+@theme {
+    /* Brand palette — indigo by default */
+    --color-brand-50:  #eef2ff;
+    --color-brand-100: #e0e7ff;
+    --color-brand-200: #c7d2fe;
+    --color-brand-500: #6366f1;
+    --color-brand-600: #4f46e5;
+    --color-brand-700: #4338ca;
+    --color-brand-900: #312e81;
+
+    /* Typography */
+    --font-sans: 'Inter var', Inter, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ── Dark mode via .dark class on <html> ─────────────────────── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Base styles ─────────────────────────────────────────────── */
 @layer base {
     html {
-        font-family: 'Inter var', Inter, system-ui, sans-serif;
+        font-family: var(--font-sans);
     }
 
     code, pre {
-        font-family: 'JetBrains Mono', monospace;
+        font-family: var(--font-mono);
     }
 }
 
+/* ── Component utilities ─────────────────────────────────────── */
+/* @apply still works in TW4 — no changes needed here */
 @layer components {
     .btn {
         @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
