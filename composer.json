@@ -1,17 +1,18 @@
 {
     "name": "dev/tall-stack-starter",
-    "description": "TALL Stack starter — Tailwind + Alpine + Livewire + Laravel",
+    "description": "TALL Stack V4 — Tailwind 4 + Alpine 3.14 + Livewire 4 + Laravel 12",
     "type": "project",
     "require": {
-        "php": "^8.2",
-        "laravel/framework": "^11.0",
-        "livewire/livewire": "^3.4",
-        "laravel/breeze": "^2.0"
+        "php": "^8.3",
+        "laravel/framework": "^12.0",
+        "livewire/livewire": "^4.0",
+        "laravel/breeze": "^3.0"
     },
     "require-dev": {
-        "pestphp/pest": "^2.34",
-        "pestphp/pest-plugin-laravel": "^2.3",
-        "laravel/pint": "^1.13"
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "laravel/pint": "^1.15"
     },
     "autoload": {
         "psr-4": {
